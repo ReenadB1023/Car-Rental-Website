@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Car - Car Rental System</title>
+    <link rel="stylesheet" href="styles-booking.css">
+</head>
+<body>
+
+    <header>
+        <h1>Book a Car</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cars.html">Available Cars</a></li>
+            <li><a href="booking.html">Book a Car</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="booking-form">
+        <h2>Complete the Booking Form</h2>
+        
+        <form action="submit_booking.php" method="post">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="car-model">Car Model:</label>
+            <select id="car-model" name="car-model" required>
+                <option value="" disabled selected>Select a Car Model</option>
+                <option value="Honda City">Honda City</option>
+                <option value="Mahindra Scorpio">Mahindra Scorpio</option>
+                <option value="Maruti Suzuki Vitara Brezza">Maruti Suzuki Vitara Brezza</option>
+                <option value="Toyota Innova">Toyota Innova</option>
+            </select>
+
+            <label for="pickup-date">Pickup Date:</label>
+            <input type="date" id="pickup-date" name="pickup-date" required>
+
+            <label for="return-date">Return Date:</label>
+            <input type="date" id="return-date" name="return-date" required>
+
+            <button type="button" onclick="reserveCar()">Book Now</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Car Rental System</p>
+    </footer>
+
+    <script>
+        function reserveCar() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var carModelSelect = document.getElementById('car-model');
+            var selectedCarModel = carModelSelect.options[carModelSelect.selectedIndex].value;
+            var pickupDate = document.getElementById('pickup-date').value;
+            var returnDate = document.getElementById('return-date').value;
+
+            // Assuming the daily price is set based on the selected car model
+            var dailyPrice = getDailyPrice(selectedCarModel);
+
+            // Calculate number of days
+            var pickupDateObj = new Date(pickupDate);
+            var returnDateObj = new Date(returnDate);
+            var numberOfDays = Math.ceil((returnDateObj - pickupDateObj) / (1000 * 60 * 60 * 24));
+
+            // Calculate total amount
+            var totalPrice = numberOfDays * dailyPrice;
+
+            // Display total amount
+            alert('Reservation Details:\n\n' +
+                'Name: ' + name + '\n' +
+                'Email: ' + email + '\n' +
+                'Phone: ' + phone + '\n' +
+                'Car Model: ' + selectedCarModel + '\n' +
+                'Pickup Date: ' + pickupDate + '\n' +
+                'Return Date: ' + returnDate + '\n\n' +
+                'Total Amount: $' + totalPrice.toFixed(2) + '\n\n' +
+                'Note: Additional charges may apply for damages.'
+            );
+        }
+
+        // Function to get daily price based on car model (replace this with your actual pricing logic)
+        function getDailyPrice(carModel) {
+            switch (carModel) {
+                case 'Honda City':
+                    return 2500;
+
+                    case 'Mahindra Scorpio':
+                    return 3000;
+                
+                    case 'Maruti Suzuki Vitara Brezza':
+                    return 2500;
+                
+                    case 'Toyota Innova':
+                    return 4500;
+                
+                default:
+                    return 0; 
+            }
+        }
+    </script>
+</body>
+</html>
